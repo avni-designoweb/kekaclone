@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
+import backgroundImage from '../assets/image.png'; 
+import { toast, ToastContainer } from 'react-toastify';
 
-const Signup = () => {
+  const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [number, setNumber] =useState('');
@@ -60,24 +62,24 @@ const Signup = () => {
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      if (validateForm()) { 
-        console.log('Form submitted', { email, number, password, role }); 
-        if (role === 'admin') { 
-            navigate('/admin'); 
-        } else { 
-            navigate('/employee');
-         } }
+       if (validateForm()) { 
+              toast.success("Login Successful!", { position: "top-right" });
+              navigate(role === 'admin' ? '/admin' : '/employee');  
+            } else {
+              toast.error("Invalid Data", { position: "top-right" });
+            }
     };
 
   return (
-    <div class="bg-white min-h-screen">
-      <Link to="/" class="font-bold text-lg text-blue-400 p-4">
-        Home
+    <div class="min-h-screen flex items-center justify-center bg-cover bg-center relative"
+          style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <Link to="/" class=" absolute left-4 top-4 font-bold text-lg text-blue-400 p-4">
+        HOME
       </Link>
-      <div class="flex items-center justify-center">
-        <div class="bg-blue-50 p-8 rounded-lg shadow-lg w-120 flex flex-col items-center justify-center">
-          <div class="mb-4 text-2xl font-bold text-blue-300">KEKA</div>
-           <div class="flex">
+      <div class="flex items-center justify-center mt-12">
+        <div class="bg-blue-50 p-8 rounded-2xl shadow-lg w-120 flex flex-col items-center justify-center">
+          <div class="mb-1 text-2xl font-bold text-blue-500">KEKA</div>
+           <div class="flex mb-1">
                 
                        <button class={`border px-4 py-2 rounded-full text-blue ${ role === 'admin' ? 'bg-white text-blue-800' :' text-white bg-blue-500 border-blue-500' } 
                        cursor-pointer hover:bg-white hover:text-blue-900 mr-2`} 
@@ -90,10 +92,10 @@ const Signup = () => {
                        onClick={() => setRole('employee')}>
                        Employee
                      </button>
-                   </div>         
+            </div>         
             <div>
             <form onSubmit={handleSubmit} class="w-100">
-            <div class="flex flex-row justify-between mb-4 gap-4">
+            <div class="flex flex-row justify-between mb-1 gap-4">
             <div class="flex flex-col w-full">
                 <input
                 type="text"
@@ -117,7 +119,7 @@ const Signup = () => {
             </div>
             </div>
 
-              <div class="mb-4">
+              <div class="mb-1">
                 <label class="block text-black font-medium">Contact Number</label>
                 <input
                   type="text"
@@ -128,7 +130,7 @@ const Signup = () => {
                 />
                 {errors.number && <div class="text-red-500 text-sm mt-1">{errors.number}</div>}
               </div>
-              <div class="mb-4">
+              <div class="mb-1">
                 <label class="block text-black font-medium">Email</label>
                 <input
                   type="email"
@@ -144,7 +146,7 @@ const Signup = () => {
 
               {role === 'admin' && (
                 <>
-                  <div className="mb-4">
+                  <div className="mb-1">
                     <label className="block text-black font-medium">Company Name</label>
                     <input
                       type="text"
@@ -155,7 +157,7 @@ const Signup = () => {
                     />
                   </div>
 
-                  <div className="mb-4">
+                  <div className="mb-1">
                     <label className="block text-black font-medium">Industry Type</label>
                     <select
                       value={industrytype}
@@ -205,9 +207,11 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
 
 export default Signup;
 
+//avni

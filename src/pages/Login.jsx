@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
+import backgroundImage from '../assets/image.png'; 
+import { toast, ToastContainer } from 'react-toastify';
+
 
 const Login = () => {
 
@@ -34,22 +37,22 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) { 
-        console.log('Form submitted', { email,password, role }); 
-        if (role === 'admin') { 
-            navigate('/admin'); 
-        } else { 
-            navigate('/employee');
-         } }
+        toast.success("Login Successful!", { position: "top-right" });
+        navigate(role === 'admin' ? '/admin' : '/employee');  
+      } else {
+        toast.error("Invalid Username or Password", { position: "top-right" });
+      }
   };
 
   return (
-    <div class="bg-white min-h-screen">
-      <Link to="/" class="font-bold text-lg text-blue-400 p-2">
-        Home
+    <div class="min-h-screen flex items-center justify-center bg-cover bg-center relative"
+      style={{ backgroundImage: `url(${backgroundImage})` }} >
+      <Link to="/" class="absolute left-4 top-4 font-bold text-lg text-blue-100 p-2">
+        HOME
       </Link>
       <div class="flex items-center justify-center">
-        <div class="bg-blue-50 p-8 rounded-lg shadow-lg w-100 flex flex-col items-center justify-center">
-          <div class="mb-4 text-2xl font-bold text-blue-300">KEKA</div>
+        <div class="bg-blue-50 p-8 rounded-2xl shadow-lg w-100 flex flex-col items-center justify-center">
+          <div class="mb-4 text-2xl font-bold text-blue-500">KEKA</div>
           <div class="flex">
             <Link to="/login">
               <button class={`border px-4 py-2 rounded-full text-blue ${ role === 'admin' ? 'bg-white text-blue-800' :' text-white bg-blue-500 border-blue-500' } 
@@ -110,6 +113,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
