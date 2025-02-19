@@ -10,7 +10,8 @@ import Additional from './components/Additional';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-
+import Admin from './pages/Admin';
+import Employee from './pages/Employee';
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/employee" element={<Employee />} />
         
 
       </Routes>
